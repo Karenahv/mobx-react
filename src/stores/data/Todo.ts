@@ -1,5 +1,5 @@
 
-import {action, computed, observable, reaction, when} from "mobx";
+import {action, computed, makeAutoObservable, observable, reaction, when} from "mobx";
 import TodoStore from "./todo-store";
 
 let runningId = 0;
@@ -7,7 +7,6 @@ let runningId = 0;
 export default class Todo {
     id: number = runningId++;
     userId: number
-
     @observable
     name: string;
     @observable
@@ -16,6 +15,7 @@ export default class Todo {
     private readonly disposer: () => void;
 
     constructor(name: string, userId: number, todoStore:TodoStore) {
+        makeAutoObservable(this, {})
         this.name = name;
         this.userId = userId;
 

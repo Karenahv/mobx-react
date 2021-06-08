@@ -1,4 +1,4 @@
-import {computed, observable} from "mobx";
+import {computed, makeAutoObservable, observable} from "mobx";
 import RootStore from "../root-store";
 
 
@@ -13,6 +13,7 @@ export default class User {
     private readonly rootStore: RootStore
 
     constructor(name:string, rootStore:RootStore) {
+        makeAutoObservable(this, {})
         this.name = name
         this.id= runningID++
         this.rootStore = rootStore

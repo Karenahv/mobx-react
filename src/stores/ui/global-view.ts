@@ -1,7 +1,13 @@
 import RootStore from "../root-store";
-import {autorun, makeAutoObservable} from "mobx";
+import {action, autorun, makeAutoObservable} from "mobx";
 
+export enum Views {
+    Todos = 'Todos',
+    Users = 'Users'
+}
 export default class GlobalView {
+    private rootStore: RootStore
+    currentView: Views = Views.Todos
     themeColor: string='blue'
     constructor(rootStore: RootStore) {
         makeAutoObservable(this, {})
@@ -11,8 +17,13 @@ export default class GlobalView {
             'todos' + rootStore.dataStore.todoStore.todoList.length + 'names ' + rootStore.dataStore.todoStore.todoList.map(t=>t.name))
 
         })
+        this.rootStore = rootStore
 
 
 
     }
+    @action
+        updateView(view: Views){
+            this.currentView = view
+        }
 }

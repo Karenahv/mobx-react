@@ -9,6 +9,7 @@ export default class TodoStore {
     todoList: Todo[] = [];
 
     constructor() {
+        makeAutoObservable(this, {})
         reaction(
             () => this.todoList.length,
             () => console.log(`Current Todo Count: ${this.todoList.length}, Done Todos: ${this.completedTodos}, Incomplete Todos: ${this.incompleteTodos}`)

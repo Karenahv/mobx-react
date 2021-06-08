@@ -4,37 +4,40 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 //import './test'
-import './test2'
+//import './test2'
 import RootStore from "./stores/root-store";
+import {createStore} from "./stores/helpers/create-store";
 //import './example2'
-import './exercise1'
+//import './exercise1'
+import {StoreProvider} from "./stores/helpers/store-context";
 
-const rootStore = new RootStore()
+const rootStore = createStore()
 
 
 console.log('rootStore', rootStore)
 
 // create 4 users
-rootStore.dataStore.userStore.addUser('Georgy');
-rootStore.dataStore.userStore.addUser('Student 1');
-rootStore.dataStore.userStore.addUser('Student 2');
-rootStore.dataStore.userStore.addUser('Student 3');
+//rootStore.dataStore.userStore.addUser('Georgy');
+//rootStore.dataStore.userStore.addUser('Student 1');
+//rootStore.dataStore.userStore.addUser('Student 2');
+//rootStore.dataStore.userStore.addUser('Student 3');
 
 //lets take the user so we can do actions on him
-const newUser = rootStore.dataStore.userStore.getUser('Georgy')
+//const newUser = rootStore.dataStore.userStore.getUser('Georgy')
 
 //lests add some todos to the user
-rootStore.dataStore.todoStore.addTodo('FInish the exercise', newUser.id)
-rootStore.dataStore.todoStore.addTodo('Learn Mobx', newUser.id)
+ rootStore.dataStore.todoStore.addTodo('Finish the Course', 999)
+ rootStore.dataStore.todoStore.addTodo('Learn Mobx', 999)
+ rootStore.dataStore.todoStore.addTodo('Connect Mobx To React', 999)
 
 // now we remove him
-rootStore.dataStore.userStore.removeUser('Georgy')
+//rootStore.dataStore.userStore.removeUser('Georgy')
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <StoreProvider value={rootStore}>
+        <App />
+    </StoreProvider>,
   document.getElementById('root')
 );
 
