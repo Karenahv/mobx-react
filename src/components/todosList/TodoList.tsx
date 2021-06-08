@@ -1,11 +1,15 @@
-import {useState} from "react";
+import {FunctionComponent, useState} from "react";
 import {useStore} from "../../stores/helpers/use-store";
 import {observer} from "mobx-react-lite";
 import Modal from 'react-modal';
 import TodoComponent from "./TodoComponent";
+import User from "../../stores/data/user";
 
+interface Props {
+    user?: User;
+}
 
-const TodoList = observer(() => {
+const TodoList: FunctionComponent<Props>  = observer(({user}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const {dataStore: {todoStore}} = useStore()
 
@@ -18,10 +22,11 @@ const TodoList = observer(() => {
 
     function handleAddTodo(){
         const nameTodo = (document.getElementById('name-todo') as HTMLInputElement).value;
-            todoStore.addTodo(nameTodo, 999)
+            todoStore.addTodo(nameTodo, user? user.id: 999)
 
     }
-
+    const completedTodos = user ? user.completedTodos : todoStore.completedTodos
+    const incompletedTodos = user ? user.incompleteTodos : todoStore.incompleteTodos
     return (
         <div>
             <Modal
@@ -41,21 +46,17 @@ const TodoList = observer(() => {
                   </Modal>
                 <div>
                     <h1>Todos Completed</h1>
-                    <h3>{todoStore.completedTodos}</h3>
-                    {todoStore.todoList.map((todo, idx) => {
-                            if (todo.isCompleted === true) {
+                    <h3>{completedTodos.length}</h3>
+                    {completedTodos.map((todo, idx) => {
                                 return <TodoComponent key={todo.id} todo={todo}/>
-                            }
                         }
                     )}
                 </div>
                 <div>
                     <h1>Incomplete Todos</h1>
-                    <h3>{todoStore.incompleteTodos}</h3>
-                    {todoStore.todoList.map((todo, idx) => {
-                            if (todo.isCompleted === false) {
+                    <h3>{incompletedTodos.length}</h3>
+                    {incompletedTodos.map((todo, idx) => {
                                 return <TodoComponent key={todo.id} todo={todo}/>
-                            }
                         }
                     )}
 
