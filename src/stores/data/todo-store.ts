@@ -23,7 +23,6 @@ export default class TodoStore {
 
     @action
     addTodo(name: string, userId:number) {
-        debugger;
         this.todoList.push(new Todo(name,userId, this));
     }
 
@@ -32,9 +31,7 @@ export default class TodoStore {
     }
     @action
     editTodo(newname: string, name: string){
-        debugger;
         const todoToEdit = this.getTodo(name);
-        debugger;
         if(todoToEdit){
             todoToEdit.name = newname
         }
