@@ -31,10 +31,10 @@ const TodoList = observer(() => {
             >
 
                 <button onClick={closeModal}>close</button>
-                <div>Add User</div>
+                <div>Add Todo</div>
                 <form>
                     <label>Nombre de la tarea</label>
-                    <input id='name-todo'/>
+                    <input id='name-todo' />
                     <button onClick={handleAddTodo}>Add Todo</button>
 
                 </form>
@@ -44,7 +44,7 @@ const TodoList = observer(() => {
                     <h3>{todoStore.completedTodos}</h3>
                     {todoStore.todoList.map((todo, idx) => {
                             if (todo.isCompleted === true) {
-                                return <TodoComponent todo={todo}/>
+                                return <TodoComponent key={todo.id} todo={todo}/>
                             }
                         }
                     )}
@@ -54,15 +54,14 @@ const TodoList = observer(() => {
                     <h3>{todoStore.incompleteTodos}</h3>
                     {todoStore.todoList.map((todo, idx) => {
                             if (todo.isCompleted === false) {
-                                return <TodoComponent todo={todo}/>
+                                return <TodoComponent key={todo.id} todo={todo}/>
                             }
                         }
                     )}
 
                 </div>
                 <button onClick={openModal}>Add Todo</button>
-                <button>Remove Todo</button>
-                <button>Edit Todo</button>
+
         </div>
 )
 })
